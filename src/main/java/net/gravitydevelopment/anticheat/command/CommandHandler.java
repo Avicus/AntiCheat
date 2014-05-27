@@ -32,7 +32,7 @@ public class CommandHandler implements CommandExecutor {
 
     public CommandHandler() {
         commands.add(new CommandHelp());
-        commands.add(new CommandCalibrate());
+        //commands.add(new CommandCalibrate());
         commands.add(new CommandCheck());
         commands.add(new CommandDebug());
         commands.add(new CommandDeveloper());
@@ -57,8 +57,11 @@ public class CommandHandler implements CommandExecutor {
             for (CommandBase base : commands) {
                 if (base.getCommand().equalsIgnoreCase(command)) {
                     base.run(cs, newArgs);
+                    return true;
                 }
             }
+            // Command not found, send help
+            commands.get(0).run(cs, null);
         } else {
             // Send help
             commands.get(0).run(cs, null);

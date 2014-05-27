@@ -336,6 +336,21 @@ public final class Utilities {
     }
 
     /**
+     * Determine whether a String can be cast to a Double
+     *
+     * @param string text to check
+     * @return true if double
+     */
+    public static boolean isDouble(String string) {
+        try {
+            Double.parseDouble(string);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    /**
      * Calculate the time in milliseconds that it should take to break the given block with the given tool
      *
      * @param tool  tool to check
@@ -352,17 +367,11 @@ public final class Utilities {
 
         long result = Math.round((bhardness * thardness) * 0.10 * 10000);
 
-        result += 150;
-
         if (enchantlvl > 0) {
             result /= enchantlvl * enchantlvl + 1L;
         }
 
-        if (result > 25000) {
-            result = 25000;
-        } else if (result < 0) {
-            result = 0;
-        }
+        result = result > 25000 ? 25000 : result < 0 ? 0 : result;
 
         if (isQuickCombo(tool, block)) {
             result = result / 2;
